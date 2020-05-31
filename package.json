@@ -4,6 +4,7 @@
   "description": "",
   "main": "target/src/index.js",
   "author": "Christian Rackerseder <git@echooff.de>",
+  "license": "MIT",
   "scripts": {
     "compile": "tsc --build",
     "lint": "eslint --ext ts,tsx src test",
@@ -12,7 +13,6 @@
     "test:unit:coverage": "nyc mocha"
   },
   "keywords": [],
-  "license": "ISC",
   "dependencies": {
     "@actions/core": "1.2.4",
     "got": "11.1.4",
