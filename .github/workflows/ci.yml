@@ -29,6 +29,8 @@ jobs:
         run: npm run compile
       - name: Run tests
         run: npm run test:unit:coverage
+      - name: Build application
+        run: npm run build
       - name: Quickmetrics
         uses: ./
         with:

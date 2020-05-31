@@ -17,7 +17,7 @@ inputs:
     required: false
 runs:
   using: node12
-  main: target/src/index.js
+  main: target/dist/index.js
 branding:
   icon: bar-chart-2
   color: white
