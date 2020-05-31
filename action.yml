@@ -1,4 +1,4 @@
-name: Quickmetrics
+name: quickmetrics-action
 author: Christian Rackerseder
 description: Collect metrics for Quickmetrics in your workflow
 inputs:

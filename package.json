@@ -1,7 +1,7 @@
 {
-  "name": "quickmetrics",
+  "name": "quickmetrics-action",
   "version": "0.1.0",
-  "description": "",
+  "description": "A GitHub action that send metrics to Quickmetrics",
   "main": "target/dist/index.js",
   "author": "Christian Rackerseder <git@echooff.de>",
   "license": "MIT",
