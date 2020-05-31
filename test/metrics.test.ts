@@ -33,28 +33,27 @@ function createArguments() {
   };
 }
 
+async function doSendToQuickmetrics(dimension?: string) {
+  const args = createArguments();
+  await sendToQuickmetrics({
+    got: (args.got as unknown) as Got,
+    core: (args.core as unknown) as typeof actionsCore,
+    name: args.name,
+    apiKey: args.apiKey,
+    value: args.value,
+    dimension,
+  });
+  return args;
+}
+
 suite('metrics', function () {
   test('sendToQuickmetrics() use correct Quickmetrics URL', async function () {
-    const { core, got, apiKey, name, value } = createArguments();
-    await sendToQuickmetrics({
-      got: (got as unknown) as Got,
-      core: (core as unknown) as typeof actionsCore,
-      name,
-      apiKey,
-      value,
-    });
+    const { got } = await doSendToQuickmetrics();
     sinon.assert.calledWith(got.post, 'https://qckm.io/json');
   });
 
   test('sendToQuickmetrics() set correct HTTP headers', async function () {
-    const { core, got, apiKey, name, value } = createArguments();
-    await sendToQuickmetrics({
-      got: (got as unknown) as Got,
-      core: (core as unknown) as typeof actionsCore,
-      name,
-      apiKey,
-      value,
-    });
+    const { got, apiKey } = await doSendToQuickmetrics();
     const actual = got.post.args[0][1].headers;
     const expected = {
       'x-qm-key': apiKey,
@@ -63,14 +62,7 @@ suite('metrics', function () {
   });
 
   test('sendToQuickmetrics() sends JSON body without dimension', async function () {
-    const { core, got, apiKey, name, value } = createArguments();
-    await sendToQuickmetrics({
-      got: (got as unknown) as Got,
-      core: (core as unknown) as typeof actionsCore,
-      name,
-      apiKey,
-      value,
-    });
+    const { got, value, name } = await doSendToQuickmetrics();
     const actual = got.post.args[0][1].json;
     const expected = {
       name,
@@ -81,16 +73,8 @@ suite('metrics', function () {
   });
 
   test('sendToQuickmetrics() sends JSON body with dimension', async function () {
-    const { core, got, apiKey, name, value } = createArguments();
     const dimension = 'custom-dimension';
-    await sendToQuickmetrics({
-      got: (got as unknown) as Got,
-      core: (core as unknown) as typeof actionsCore,
-      name,
-      apiKey,
-      value,
-      dimension,
-    });
+    const { got, value, name } = await doSendToQuickmetrics(dimension);
     const actual = got.post.args[0][1].json;
     const expected = {
       name,
