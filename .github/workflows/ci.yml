@@ -29,6 +29,11 @@ jobs:
         run: npm run compile
       - name: Run tests
         run: npm run test:unit:coverage
+      - name: Upload code coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+          file: target/coverage/clover.xml
       - name: Build application
         run: npm run build
       - name: Quickmetrics
