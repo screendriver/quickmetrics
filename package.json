@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc --build",
+    "lint": "eslint --ext ts,tsx src test",
     "test:unit": "mocha"
   },
   "keywords": [],
