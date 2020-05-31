@@ -1,0 +1,23 @@
+name: Quickmetrics
+author: Christian Rackerseder
+description: Collect metrics for Quickmetrics in your workflow
+inputs:
+  name:
+    description: Metric name
+    required: true
+  api-key:
+    description: API key
+    required: true
+  value:
+    description: The value to send
+    required: false
+    default: '1'
+  dimension:
+    description: Dimension to send
+    required: false
+runs:
+  using: node12
+  main: target/src/index.js
+branding:
+  icon: bar-chart-2
+  color: white
