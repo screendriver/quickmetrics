@@ -29,3 +29,8 @@ jobs:
         run: npm run compile
       - name: Run tests
         run: npm run test:unit:coverage
+      - name: Quickmetrics
+        uses: ./
+        with:
+          name: quickmetrics.action.usage
+          api-key: ${{ secrets.QUICKMETRICS_API_KEY }}
