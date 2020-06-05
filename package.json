@@ -16,7 +16,7 @@
   "keywords": [],
   "dependencies": {
     "@actions/core": "1.2.4",
-    "got": "11.2.0",
+    "got": "11.3.0",
     "p-pipe": "3.1.0",
     "tslib": "2.0.0"
   },
