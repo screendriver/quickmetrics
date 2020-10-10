@@ -35,6 +35,11 @@ jobs:
         run: npm run compile
       - name: Build application
         run: npm run build
+      - name: Upload built application as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: application
+          path: target/dist/
       - name: Quickmetrics
         uses: ./
         with:
