@@ -1,6 +1,11 @@
 {
   "extends": ["config:base"],
   "labels": ["renovate"],
+  "rebaseStalePrs": false,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  },
   "nvm": {
     "enabled": false
   },
