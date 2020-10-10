@@ -1,6 +1,5 @@
 {
   "extends": ["config:base"],
-  "commitMessagePrefix": "⬆️ ",
   "labels": ["renovate"],
   "nvm": {
     "enabled": false
@@ -9,18 +8,6 @@
     {
       "depTypeList": ["dependencies", "devDependencies"],
       "updateTypes": ["minor", "patch"],
-      "automerge": true,
-      "automergeType": "branch"
-    },
-    {
-      "packagePatterns": ["^@types/"],
-      "groupName": "definitely typed packages",
-      "automerge": true,
-      "automergeType": "branch"
-    },
-    {
-      "packagePatterns": ["eslint"],
-      "groupName": "eslint packages",
       "automerge": true,
       "automergeType": "branch"
     }

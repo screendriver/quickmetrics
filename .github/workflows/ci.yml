@@ -3,22 +3,35 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: wagoid/commitlint-github-action@v2
+  code-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js v14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: npm ci
+      - run: npm run test:unit:coverage
+      - name: Upload code coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          file: target/coverage/coverage-final.json
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
       - name: Install dependencies
         run: npm ci
       - name: Check source code
@@ -27,17 +40,36 @@ jobs:
           npm run copy:paste:detector
       - name: Compile source code
         run: npm run compile
-      - name: Run tests
-        run: npm run test:unit:coverage
-      - name: Upload code coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{secrets.CODECOV_TOKEN}}
-          file: target/coverage/clover.xml
       - name: Build application
         run: npm run build
+      - name: Upload built application as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: application
+          path: target/dist/
       - name: Quickmetrics
         uses: ./
         with:
           name: quickmetrics.action.usage
           api-key: ${{ secrets.QUICKMETRICS_API_KEY }}
+  release:
+    if: github.ref == 'refs/heads/releases/v1'
+    needs: [commitlint, code-coverage, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Install dependencies
+        run: npm ci
+      - name: Download built application artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: application
+          path: target/dist/
+      - name: Semantic release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

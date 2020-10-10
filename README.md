@@ -1,14 +1,13 @@
 # quickmetrics-action
 
 [![GitHub Actions status](https://github.com/screendriver/quickmetrics-action/workflows/CI/badge.svg)](https://github.com/screendriver/quickmetrics-action/actions)
-[![Total alerts](https://img.shields.io/lgtm/alerts/github/screendriver/quickmetrics-action.svg)](https://lgtm.com/projects/g/screendriver/quickmetrics-action/alerts/)
-[![codecov](https://codecov.io/gh/screendriver/quickmetrics-action/branch/master/graph/badge.svg)](https://codecov.io/gh/screendriver/quickmetrics-action)
+[![codecov](https://codecov.io/gh/screendriver/quickmetrics-action/branch/main/graph/badge.svg)](https://codecov.io/gh/screendriver/quickmetrics-action)
 
 A GitHub action that send metrics to [Quickmetrics](https://quickmetrics.io). This is useful for example when you want to create metrics about how often your GitHub actions run or how often you deploy to production. It could also be used te send an [output](https://help.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputs) from a previous action as a metric.
 
 ## Usage
 
-See [action.yml](https://github.com/screendriver/quickmetrics-action/blob/master/action.yml)
+See [action.yml](https://github.com/screendriver/quickmetrics-action/blob/main/action.yml)
 
 ## Inputs
 
