@@ -1,6 +1,6 @@
 {
   "name": "quickmetrics-action",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A GitHub action that send metrics to Quickmetrics",
   "main": "target/dist/index.js",
   "author": "Christian Rackerseder <git@echooff.de>",
@@ -11,8 +11,7 @@
     "lint": "eslint src test --ext '.ts'",
     "copy:paste:detector": "jscpd src test",
     "test:unit": "TS_NODE_PROJECT=tsconfig.base.json mocha",
-    "test:unit:coverage": "TS_NODE_PROJECT=tsconfig.base.json c8 mocha",
-    "build": "ncc build target/src/index.js --out target/dist/ --minify"
+    "test:unit:coverage": "TS_NODE_PROJECT=tsconfig.base.json c8 mocha"
   },
   "keywords": [],
   "dependencies": {
