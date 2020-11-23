@@ -54,7 +54,7 @@ suite('metrics', function () {
 
   test('sendToQuickmetrics() set correct HTTP headers', async function () {
     const { got, apiKey } = await doSendToQuickmetrics();
-    const actual = got.post.args[0][1].headers;
+    const actual = got.post.args[0]![1].headers;
     const expected = {
       'x-qm-key': apiKey,
     };
@@ -63,7 +63,7 @@ suite('metrics', function () {
 
   test('sendToQuickmetrics() sends JSON body without dimension', async function () {
     const { got, value, name } = await doSendToQuickmetrics();
-    const actual = got.post.args[0][1].json;
+    const actual = got.post.args[0]![1].json;
     const expected = {
       name,
       value,
@@ -75,7 +75,7 @@ suite('metrics', function () {
   test('sendToQuickmetrics() sends JSON body with dimension', async function () {
     const dimension = 'custom-dimension';
     const { got, value, name } = await doSendToQuickmetrics(dimension);
-    const actual = got.post.args[0][1].json;
+    const actual = got.post.args[0]![1].json;
     const expected = {
       name,
       value,
