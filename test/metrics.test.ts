@@ -36,8 +36,8 @@ function createArguments() {
 async function doSendToQuickmetrics(dimension?: string) {
   const args = createArguments();
   await sendToQuickmetrics({
-    got: (args.got as unknown) as Got,
-    core: (args.core as unknown) as typeof actionsCore,
+    got: args.got as unknown as Got,
+    core: args.core as unknown as typeof actionsCore,
     name: args.name,
     apiKey: args.apiKey,
     value: args.value,
@@ -89,7 +89,7 @@ suite('metrics', function () {
     const error = {
       error: 'An Error',
     };
-    logResponse((core as unknown) as typeof actionsCore)(error);
+    logResponse(core as unknown as typeof actionsCore)(error);
     sinon.assert.notCalled(core.info);
   });
 
@@ -98,21 +98,21 @@ suite('metrics', function () {
     const error = {
       error: 'An Error',
     };
-    logResponse((core as unknown) as typeof actionsCore)(error);
+    logResponse(core as unknown as typeof actionsCore)(error);
     sinon.assert.calledWith(core.setFailed, 'An Error');
   });
 
   test('logResponse() logs info when no error occurred', function () {
     const core = createCore();
     const error = {};
-    logResponse((core as unknown) as typeof actionsCore)(error);
+    logResponse(core as unknown as typeof actionsCore)(error);
     sinon.assert.calledWith(core.info, 'Metrics sent');
   });
 
   test('logResponse() sets not failed when no error occurred', function () {
     const core = createCore();
     const error = {};
-    logResponse((core as unknown) as typeof actionsCore)(error);
+    logResponse(core as unknown as typeof actionsCore)(error);
     sinon.assert.notCalled(core.setFailed);
   });
 });
