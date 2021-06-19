@@ -33,7 +33,6 @@
     "@typescript-eslint/eslint-plugin": "4.26.1",
     "@typescript-eslint/parser": "4.26.1",
     "@vercel/ncc": "0.28.6",
-    "@zeit/ncc": "0.22.3",
     "c8": "7.7.2",
     "chai": "4.3.4",
     "eslint": "7.28.0",
