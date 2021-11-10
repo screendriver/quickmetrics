@@ -41,7 +41,7 @@ async function doSendToQuickmetrics(dimension?: string) {
     name: args.name,
     apiKey: args.apiKey,
     value: args.value,
-    dimension,
+    ...(dimension ? { dimension } : undefined),
   });
   return args;
 }
