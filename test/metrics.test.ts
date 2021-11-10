@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import test from 'ava';
 import sinon from 'sinon';
 import * as actionsCore from '@actions/core';
 import { Got } from 'got';
@@ -46,73 +46,83 @@ async function doSendToQuickmetrics(dimension?: string) {
   return args;
 }
 
-suite('metrics', function () {
-  test('sendToQuickmetrics() use correct Quickmetrics URL', async function () {
-    const { got } = await doSendToQuickmetrics();
-    sinon.assert.calledWith(got.post, 'https://qckm.io/json');
-  });
+test('sendToQuickmetrics() use correct Quickmetrics URL', async (t) => {
+  const { got } = await doSendToQuickmetrics();
+  sinon.assert.calledWith(got.post, 'https://qckm.io/json');
+  t.pass();
+});
 
-  test('sendToQuickmetrics() set correct HTTP headers', async function () {
-    const { got, apiKey } = await doSendToQuickmetrics();
-    const actual = got.post.args[0]![1].headers;
-    const expected = {
-      'x-qm-key': apiKey,
-    };
-    assert.deepEqual(actual, expected);
-  });
+test('sendToQuickmetrics() set correct HTTP headers', async (t) => {
+  const { got, apiKey } = await doSendToQuickmetrics();
 
-  test('sendToQuickmetrics() sends JSON body without dimension', async function () {
-    const { got, value, name } = await doSendToQuickmetrics();
-    const actual = got.post.args[0]![1].json;
-    const expected = {
-      name,
-      value,
-      dimension: undefined,
-    };
-    assert.deepEqual(actual, expected);
-  });
+  const actual = got.post.args[0]![1].headers;
+  const expected = {
+    'x-qm-key': apiKey,
+  };
+  t.deepEqual(actual, expected);
+});
 
-  test('sendToQuickmetrics() sends JSON body with dimension', async function () {
-    const dimension = 'custom-dimension';
-    const { got, value, name } = await doSendToQuickmetrics(dimension);
-    const actual = got.post.args[0]![1].json;
-    const expected = {
-      name,
-      value,
-      dimension,
-    };
-    assert.deepEqual(actual, expected);
-  });
+test('sendToQuickmetrics() sends JSON body without dimension', async (t) => {
+  const { got, value, name } = await doSendToQuickmetrics();
 
-  test('logResponse() logs no info when error occurred', function () {
-    const core = createCore();
-    const error = {
-      error: 'An Error',
-    };
-    logResponse(core as unknown as typeof actionsCore)(error);
-    sinon.assert.notCalled(core.info);
-  });
+  const actual = got.post.args[0]![1].json;
+  const expected = {
+    name,
+    value,
+    dimension: undefined,
+  };
+  t.deepEqual(actual, expected);
+});
 
-  test('logResponse() sets failed when error occurred', function () {
-    const core = createCore();
-    const error = {
-      error: 'An Error',
-    };
-    logResponse(core as unknown as typeof actionsCore)(error);
-    sinon.assert.calledWith(core.setFailed, 'An Error');
-  });
+test('sendToQuickmetrics() sends JSON body with dimension', async (t) => {
+  const dimension = 'custom-dimension';
+  const { got, value, name } = await doSendToQuickmetrics(dimension);
 
-  test('logResponse() logs info when no error occurred', function () {
-    const core = createCore();
-    const error = {};
-    logResponse(core as unknown as typeof actionsCore)(error);
-    sinon.assert.calledWith(core.info, 'Metrics sent');
-  });
+  const actual = got.post.args[0]![1].json;
+  const expected = {
+    name,
+    value,
+    dimension,
+  };
+  t.deepEqual(actual, expected);
+});
 
-  test('logResponse() sets not failed when no error occurred', function () {
-    const core = createCore();
-    const error = {};
-    logResponse(core as unknown as typeof actionsCore)(error);
-    sinon.assert.notCalled(core.setFailed);
-  });
+test('logResponse() logs no info when error occurred', (t) => {
+  const core = createCore();
+  const error = {
+    error: 'An Error',
+  };
+  logResponse(core as unknown as typeof actionsCore)(error);
+
+  sinon.assert.notCalled(core.info);
+  t.pass();
+});
+
+test('logResponse() sets failed when error occurred', (t) => {
+  const core = createCore();
+  const error = {
+    error: 'An Error',
+  };
+  logResponse(core as unknown as typeof actionsCore)(error);
+
+  sinon.assert.calledWith(core.setFailed, 'An Error');
+  t.pass();
+});
+
+test('logResponse() logs info when no error occurred', (t) => {
+  const core = createCore();
+  const error = {};
+  logResponse(core as unknown as typeof actionsCore)(error);
+
+  sinon.assert.calledWith(core.info, 'Metrics sent');
+  t.pass();
+});
+
+test('logResponse() sets not failed when no error occurred', (t) => {
+  const core = createCore();
+  const error = {};
+  logResponse(core as unknown as typeof actionsCore)(error);
+
+  sinon.assert.notCalled(core.setFailed);
+  t.pass();
 });
