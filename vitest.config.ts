@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
 	test: {
@@ -8,14 +8,14 @@ export default defineConfig({
 			functions: 100,
 			statements: 100,
 			branches: 100,
-			extension: ['.ts'],
-			include: ['src/**/*'],
-			exclude: ['src/index.ts'],
-			provider: 'c8',
-			reporter: ['lcov', 'text-summary', 'clover'],
-			reportsDirectory: './target/coverage',
+			extension: [".ts"],
+			include: ["src/**/*"],
+			exclude: ["src/index.ts"],
+			provider: "c8",
+			reporter: ["lcov", "text-summary", "clover"],
+			reportsDirectory: "./target/coverage",
 		},
-		dir: 'test/',
+		dir: "test/",
 		threads: false,
 	},
 });

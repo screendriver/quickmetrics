@@ -11,7 +11,7 @@ inputs:
   value:
     description: The value to send
     required: false
-    default: '1'
+    default: "1"
   dimension:
     description: Dimension to send
     required: false

@@ -1,5 +1,5 @@
-import * as actionsCore from '@actions/core';
-import { Got } from 'got';
+import * as actionsCore from "@actions/core";
+import { Got } from "got";
 
 interface QuickmetricsResponse {
 	error?: string;
@@ -16,9 +16,9 @@ interface SendMetricsArguments {
 
 export function sendToQuickmetrics({ got, apiKey, name, value, dimension }: SendMetricsArguments) {
 	return got
-		.post('https://qckm.io/json', {
+		.post("https://qckm.io/json", {
 			headers: {
-				'x-qm-key': apiKey,
+				"x-qm-key": apiKey,
 			},
 			json: {
 				name,
@@ -34,7 +34,7 @@ export function logResponse(core: typeof actionsCore) {
 		if (error) {
 			core.setFailed(error);
 		} else {
-			core.info('Metrics sent');
+			core.info("Metrics sent");
 		}
 	};
 }

@@ -1,13 +1,13 @@
-import * as core from '@actions/core';
-import got from 'got';
-import pipe from 'p-pipe';
-import { sendToQuickmetrics, logResponse } from './metrics';
+import * as core from "@actions/core";
+import got from "got";
+import pipe from "p-pipe";
+import { sendToQuickmetrics, logResponse } from "./metrics";
 
 async function run() {
-	const name = core.getInput('name', { required: true });
-	const apiKey = core.getInput('api-key', { required: true });
-	const value = core.getInput('value', { required: false });
-	const dimension = core.getInput('dimension', { required: false });
+	const name = core.getInput("name", { required: true });
+	const apiKey = core.getInput("api-key", { required: true });
+	const value = core.getInput("value", { required: false });
+	const dimension = core.getInput("dimension", { required: false });
 	try {
 		const args = {
 			name,
