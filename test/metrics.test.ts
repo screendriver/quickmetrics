@@ -55,7 +55,7 @@ test("sendToQuickmetrics() use correct Quickmetrics URL", async () => {
 test("sendToQuickmetrics() set correct HTTP headers", async () => {
 	const { got, apiKey } = await doSendToQuickmetrics();
 
-	const actual = got.post.args[0]![1].headers;
+	const actual = got.post.args[0]?.[1].headers;
 	const expected = {
 		"x-qm-key": apiKey,
 	};
@@ -66,7 +66,7 @@ test("sendToQuickmetrics() set correct HTTP headers", async () => {
 test("sendToQuickmetrics() sends JSON body without dimension", async () => {
 	const { got, value, name } = await doSendToQuickmetrics();
 
-	const actual = got.post.args[0]![1].json;
+	const actual = got.post.args[0]?.[1].json;
 	const expected = {
 		name,
 		value,
@@ -80,7 +80,7 @@ test("sendToQuickmetrics() sends JSON body with dimension", async () => {
 	const dimension = "custom-dimension";
 	const { got, value, name } = await doSendToQuickmetrics(dimension);
 
-	const actual = got.post.args[0]![1].json;
+	const actual = got.post.args[0]?.[1].json;
 	const expected = {
 		name,
 		value,
