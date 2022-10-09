@@ -1,4 +1,4 @@
-import test from 'ava';
+import { test, assert } from 'vitest';
 import sinon from 'sinon';
 import * as actionsCore from '@actions/core';
 import { Got } from 'got';
@@ -46,23 +46,24 @@ async function doSendToQuickmetrics(dimension?: string) {
   return args;
 }
 
-test('sendToQuickmetrics() use correct Quickmetrics URL', async (t) => {
+test('sendToQuickmetrics() use correct Quickmetrics URL', async () => {
   const { got } = await doSendToQuickmetrics();
+
   sinon.assert.calledWith(got.post, 'https://qckm.io/json');
-  t.pass();
 });
 
-test('sendToQuickmetrics() set correct HTTP headers', async (t) => {
+test('sendToQuickmetrics() set correct HTTP headers', async () => {
   const { got, apiKey } = await doSendToQuickmetrics();
 
   const actual = got.post.args[0]![1].headers;
   const expected = {
     'x-qm-key': apiKey,
   };
-  t.deepEqual(actual, expected);
+
+  assert.deepStrictEqual(actual, expected);
 });
 
-test('sendToQuickmetrics() sends JSON body without dimension', async (t) => {
+test('sendToQuickmetrics() sends JSON body without dimension', async () => {
   const { got, value, name } = await doSendToQuickmetrics();
 
   const actual = got.post.args[0]![1].json;
@@ -71,10 +72,11 @@ test('sendToQuickmetrics() sends JSON body without dimension', async (t) => {
     value,
     dimension: undefined,
   };
-  t.deepEqual(actual, expected);
+
+  assert.deepStrictEqual(actual, expected);
 });
 
-test('sendToQuickmetrics() sends JSON body with dimension', async (t) => {
+test('sendToQuickmetrics() sends JSON body with dimension', async () => {
   const dimension = 'custom-dimension';
   const { got, value, name } = await doSendToQuickmetrics(dimension);
 
@@ -84,10 +86,11 @@ test('sendToQuickmetrics() sends JSON body with dimension', async (t) => {
     value,
     dimension,
   };
-  t.deepEqual(actual, expected);
+
+  assert.deepStrictEqual(actual, expected);
 });
 
-test('logResponse() logs no info when error occurred', (t) => {
+test('logResponse() logs no info when error occurred', () => {
   const core = createCore();
   const error = {
     error: 'An Error',
@@ -95,10 +98,9 @@ test('logResponse() logs no info when error occurred', (t) => {
   logResponse(core as unknown as typeof actionsCore)(error);
 
   sinon.assert.notCalled(core.info);
-  t.pass();
 });
 
-test('logResponse() sets failed when error occurred', (t) => {
+test('logResponse() sets failed when error occurred', () => {
   const core = createCore();
   const error = {
     error: 'An Error',
@@ -106,23 +108,20 @@ test('logResponse() sets failed when error occurred', (t) => {
   logResponse(core as unknown as typeof actionsCore)(error);
 
   sinon.assert.calledWith(core.setFailed, 'An Error');
-  t.pass();
 });
 
-test('logResponse() logs info when no error occurred', (t) => {
+test('logResponse() logs info when no error occurred', () => {
   const core = createCore();
   const error = {};
   logResponse(core as unknown as typeof actionsCore)(error);
 
   sinon.assert.calledWith(core.info, 'Metrics sent');
-  t.pass();
 });
 
-test('logResponse() sets not failed when no error occurred', (t) => {
+test('logResponse() sets not failed when no error occurred', () => {
   const core = createCore();
   const error = {};
   logResponse(core as unknown as typeof actionsCore)(error);
 
   sinon.assert.notCalled(core.setFailed);
-  t.pass();
 });
