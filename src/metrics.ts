@@ -14,13 +14,7 @@ interface SendMetricsArguments {
 	core: typeof actionsCore;
 }
 
-export function sendToQuickmetrics({
-	got,
-	apiKey,
-	name,
-	value,
-	dimension,
-}: SendMetricsArguments) {
+export function sendToQuickmetrics({ got, apiKey, name, value, dimension }: SendMetricsArguments) {
 	return got
 		.post('https://qckm.io/json', {
 			headers: {
