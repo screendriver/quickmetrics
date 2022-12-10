@@ -1,4 +1,5 @@
-import { test, assert } from "vitest";
+import { test } from "uvu";
+import * as assert from "uvu/assert";
 import sinon from "sinon";
 import * as actionsCore from "@actions/core";
 import { Got } from "got";
@@ -60,7 +61,7 @@ test("sendToQuickmetrics() set correct HTTP headers", async () => {
 		"x-qm-key": apiKey,
 	};
 
-	assert.deepStrictEqual(actual, expected);
+	assert.equal(actual, expected);
 });
 
 test("sendToQuickmetrics() sends JSON body without dimension", async () => {
@@ -73,7 +74,7 @@ test("sendToQuickmetrics() sends JSON body without dimension", async () => {
 		dimension: undefined,
 	};
 
-	assert.deepStrictEqual(actual, expected);
+	assert.equal(actual, expected);
 });
 
 test("sendToQuickmetrics() sends JSON body with dimension", async () => {
@@ -87,7 +88,7 @@ test("sendToQuickmetrics() sends JSON body with dimension", async () => {
 		dimension,
 	};
 
-	assert.deepStrictEqual(actual, expected);
+	assert.equal(actual, expected);
 });
 
 test("logResponse() logs no info when error occurred", () => {
@@ -125,3 +126,5 @@ test("logResponse() sets not failed when no error occurred", () => {
 
 	sinon.assert.notCalled(core.setFailed);
 });
+
+test.run();
