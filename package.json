@@ -10,8 +10,8 @@
 		"build": "ncc build target/src/index.js --out target/dist/ --minify",
 		"lint": "eslint src test --ext '.ts'",
 		"copy:paste:detector": "jscpd src test",
-		"test:unit": "vitest",
-		"test:unit:coverage": "vitest run --coverage"
+		"test:unit": "NODE_OPTIONS='--loader tsx --no-warnings' uvu 'test' '.*\\.test\\.ts$'",
+		"test:unit:coverage": "c8 npm run test:unit"
 	},
 	"keywords": [],
 	"dependencies": {
