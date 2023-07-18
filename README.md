@@ -1,3 +1,5 @@
+# Quickmetrics has shut down and therefore this repository is archived
+
 # quickmetrics-action
 
 [![GitHub Actions status](https://github.com/screendriver/quickmetrics-action/workflows/CI/badge.svg)](https://github.com/screendriver/quickmetrics-action/actions)
